@@ -1,0 +1,25 @@
+- java -cp hsqldb.jar org.hsqldb.server.Server --database.0 file:mydb --dbname.0 firstBDD
+- double clique que le jar pour lancer le manager
+- renseigner url : jdbc:hsqldb:hsql://localhost/firstBDD
+
+Sur Spring boot :
+
+Dans application.properties :
+
+spring.datasource.driver-class-name=org.hsqldb.jdbcDriver
+spring.datasource.url=jdbc:hsqldb:hsql://localhost/firstBDD
+spring.datasource.username=SA
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+
+Dans pom.xml, ajoutez les dépendances : 
+
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+<dependency>
+<groupId>org.hsqldb</groupId>
+<artifactId>hsqldb</artifactId>
+<scope>runtime</scope>
+</dependency>

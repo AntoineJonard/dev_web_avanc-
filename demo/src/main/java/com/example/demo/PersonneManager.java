@@ -15,6 +15,8 @@ public class PersonneManager {
 
     @Autowired
     private PersonneRepository personneRepository;
+    @Autowired
+    private LivreRepository livreRepository;
 
 
     @GET
@@ -34,13 +36,33 @@ public class PersonneManager {
         return personneRepository.findByAgeOrPrenomOrNom(age, prenom, nom);
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/livres")
+    public List<Livre> getLivres(){
+        List<Livre> livres = new ArrayList<>();
+        for (Livre l : livreRepository.findAll())
+            livres.add(l);
+        return livres;
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/personne/{id}/livres")
+    public List<Livre> getPersonneLivres(@PathParam("id") int id){
+        Optional<Personne> po = personneRepository.findById(id);
+        if (po.isPresent())
+            return po.get().getLivres();
+        return null;
+    }
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/jsonpersonne")
-    public Personne addPersonne(@QueryParam("nom") String nom, @QueryParam("prenom") String prenom, @QueryParam("age") int age){
-        Personne p = new Personne(nom, prenom, age);
-        personneRepository.save(p);
-        return p;
+    public Personne addPersonne(Personne p){
+        return personneRepository.save(p);
+
     }
 
 

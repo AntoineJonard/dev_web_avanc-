@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Personne {
@@ -14,6 +12,9 @@ public class Personne {
     private String nom;
     private String prenom;
     private int age;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Livre> livres;
 
     public Personne() {
         super();
@@ -55,5 +56,13 @@ public class Personne {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<Livre> getLivres() {
+        return livres;
+    }
+
+    public void setLivres(List<Livre> livres) {
+        this.livres = livres;
     }
 }
